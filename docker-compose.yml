@@ -1,0 +1,8 @@
+version: '3'
+services:
+  app:
+    build:
+        context: ./
+    tty: true
+    volumes:
+        - ./py_slack-common-notice:/app
