@@ -18,7 +18,7 @@ class SlackNotice:
             raise
         level = self.getLevel(self.level)
         color = self.getColor(level)
-        text = self.text
+        text = self.toText(self.text)
         main_text = ''
         if level > 1:
             main_text = '<!channel>'
@@ -60,6 +60,11 @@ class SlackNotice:
             return "danger"
         return "danger"
 
+    def toText(self, var):
+        if type(var) == str:
+            return var
+        return str(var)
+
 
 if __name__ == '__main__':
     import unittest
@@ -86,5 +91,10 @@ if __name__ == '__main__':
             self.s.set(**{"url": "example.com"})
             self.assertEqual("example.com", self.s.url)
             self.assertIsNone(self.s.level)
+
+        def testText(self):
+            self.assertEqual("abc", self.s.toText("abc"))
+            self.assertEqual("['a']", self.s.toText(["a"]))
+            self.assertEqual("{'b': 1}", self.s.toText({"b":1}))
 
     unittest.main()
