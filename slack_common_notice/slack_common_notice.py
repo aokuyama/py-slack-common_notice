@@ -3,7 +3,7 @@ import json
 import os
 
 
-class SlackNotice:
+class Notice:
     def __init__(self, content={}) -> None:
         self.set(**content)
 
@@ -76,9 +76,9 @@ class SlackNotice:
 if __name__ == '__main__':
     import unittest
 
-    class SlackNoticeTest(unittest.TestCase):
+    class NoticeTest(unittest.TestCase):
         def setUp(self):
-            self.s = SlackNotice()
+            self.s = Notice()
 
         def test通知レベル(self):
             self.assertEqual(1, self.s.getLevel(1))
