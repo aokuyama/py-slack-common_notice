@@ -1,5 +1,6 @@
 import requests
 import json
+import os
 
 
 class SlackNotice:
@@ -14,7 +15,8 @@ class SlackNotice:
         return self
 
     def send(self):
-        if not self.url:
+        url = self.getUrl()
+        if not url:
             raise
         level = self.getLevel(self.level)
         color = self.getColor(level)
@@ -32,7 +34,7 @@ class SlackNotice:
                 }
             ]
         }
-        return requests.post(self.url, json.dumps(data))
+        return requests.post(url, json.dumps(data))
 
     def getLevel(self, var):
         if var == None:
@@ -65,6 +67,11 @@ class SlackNotice:
             return var
         return str(var)
 
+    def getUrl(self):
+        if self.url:
+            return self.url
+        return os.getenv('DEFAULT_SLACK_URL')
+
 
 if __name__ == '__main__':
     import unittest
@@ -95,6 +102,6 @@ if __name__ == '__main__':
         def testText(self):
             self.assertEqual("abc", self.s.toText("abc"))
             self.assertEqual("['a']", self.s.toText(["a"]))
-            self.assertEqual("{'b': 1}", self.s.toText({"b":1}))
+            self.assertEqual("{'b': 1}", self.s.toText({"b": 1}))
 
     unittest.main()
