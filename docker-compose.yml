@@ -5,4 +5,7 @@ services:
         context: ./
     tty: true
     volumes:
-        - ./py_slack-common-notice:/app
+        - ./slack_common_notice:/app/slack_common_notice
+    working_dir: /app/slack_common_notice
+    environment:
+      - PYTHONPATH=/app
